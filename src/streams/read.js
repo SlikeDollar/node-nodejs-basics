@@ -1,5 +1,9 @@
-const read = async () => {
-    // Write your code here 
+import fs from 'fs';
+import { stdout } from 'process';
+
+const read = async (path) => {
+  fs.createReadStream(path).pipe(stdout);
 };
 
-await read();
+const path = new URL('./files/fileToRead.txt', import.meta.url).pathname;
+await read(path);
