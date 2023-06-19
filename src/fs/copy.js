@@ -10,7 +10,7 @@ const copy = async (initialDirectory, finalDirectory) => {
   }
 
   fs.cp(initialDirectory, finalDirectory, {recursive: true})
-    .catch(err => console.error('fs operation failed'))
+    .catch(err => console.error(err, 'fs operation failed'))
 };
 
 const initalDirectory = new URL('./files', import.meta.url).pathname;
