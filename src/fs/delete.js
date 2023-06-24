@@ -1,5 +1,9 @@
 import { checkIfPathExists } from '../helpers/checkIfPathExists.js';
 import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const remove = async (path) => {
   if (!(await checkIfPathExists(path))) {
@@ -10,5 +14,5 @@ const remove = async (path) => {
     .catch(err => console.error('FS operation failed'));
 };
 
-const path = new URL('./files/fileToRemove.txt', import.meta.url).pathname;
-await remove(path);
+const filePath = path.join(__dirname, 'files', 'fileToRemove.txt');
+await remove(filePath);

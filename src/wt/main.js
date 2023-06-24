@@ -1,10 +1,14 @@
 import os from 'os';
+import path from "path";
 import { URL } from 'url';
 import { Worker } from 'worker_threads';
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const performCalculations = async (path) => {
   const coresNumber = os.cpus().length;
-  const defaultFibNum = 34;
+  const defaultFibNum = 10;
 
   const promiseArr = Array.from({length: coresNumber}, ((_, index) => {
     return new Promise((res, rej) => {
@@ -22,5 +26,5 @@ const performCalculations = async (path) => {
   });
 };
 
-const path = new URL('./worker.js', import.meta.url).pathname;
-console.log(await performCalculations(path));
+const filePath = path.join(__dirname, "worker.js");
+console.log(await performCalculations(filePath));

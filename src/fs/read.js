@@ -1,6 +1,10 @@
 import { stdout } from "process";
 import { checkIfPathExists } from "../helpers/checkIfPathExists.js";
 import fs from "fs";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const read = async (path) => {
   if (!(await checkIfPathExists(path))) {
@@ -14,5 +18,5 @@ const read = async (path) => {
   })
 };
 
-const path = new URL('./files/fileToRead.txt', import.meta.url).pathname;
-await read(path);
+const filePath = path.join(__dirname, 'files', 'fileToRead.txt');
+await read(filePath);

@@ -1,5 +1,9 @@
 import { checkIfPathExists } from "../helpers/checkIfPathExists.js";
 import fs from "fs/promises";
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const copy = async (initialDirectory, finalDirectory) => {
   if (
@@ -13,7 +17,7 @@ const copy = async (initialDirectory, finalDirectory) => {
     .catch(err => console.error(err, 'fs operation failed'))
 };
 
-const initalDirectory = new URL('./files', import.meta.url).pathname;
-const finalDirectory = new URL('./files_copy', import.meta.url).pathname;
+const initalDirectory = path.join(__dirname, 'files');
+const finalDirectory = path.join(__dirname, 'files_copy');
 
 await copy(initalDirectory, finalDirectory);

@@ -2,12 +2,14 @@ import path from 'path'
 import { release, version } from 'os'
 import { createServer as createServerHttp } from 'http'
 import './files/c.js'
+import { fileURLToPath } from 'url';
+
 
 const random = Math.random();
 export let unknownObject;
 
-const __filename = new URL('', import.meta.url).pathname;
-const __dirname = new URL('.', import.meta.url).pathname;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
 
 if (random > 0.5) {
     unknownObject = import('./files/a.json', {assert:{type:'json'}});

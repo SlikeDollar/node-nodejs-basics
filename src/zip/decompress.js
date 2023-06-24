@@ -1,6 +1,10 @@
 import fs from 'fs';
 import { pipeline } from 'stream';
 import { createGunzip } from 'zlib';
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const decompress = async (source, dest) => {
   const unzip = createGunzip();
@@ -15,6 +19,6 @@ const decompress = async (source, dest) => {
   });
 };
 
-const sourcePath = new URL('./files/archive.gz', import.meta.url).pathname;
-const destPath = new URL('./files/fileCompress.txt', import.meta.url).pathname;
-await decompress(sourcePath, destPath);
+const sourcePath = path.join(__dirname, "files", "archive.gz");
+const destinationPath = path.join(__dirname, "files", "fileCompress.txt");
+await decompress(sourcePath, destinationPath);

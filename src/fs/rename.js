@@ -1,5 +1,9 @@
 import fs from "fs/promises";
 import { checkIfPathExists } from "../helpers/checkIfPathExists.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const rename = async (initialFile, resultFile) => {
   if (!(await checkIfPathExists(initialFile)) || await checkIfPathExists(resultFile)) {
@@ -7,10 +11,10 @@ const rename = async (initialFile, resultFile) => {
   }
 
   fs.rename(initialFile, resultFile)
-    .catch(err => console.error('FS operation failed'))
+    .catch(() => console.error('FS operation failed'));
 };
 
-const initialFile = new URL('./files/wrongFilename.txt', import.meta.url).pathname;
-const resultFile = new URL('./files/properFilename.md', import.meta.url).pathname;
+const initialFile = path.join(__dirname, 'files', 'wrongFilename.txt');
+const resultFile = path.join(__dirname, 'files', 'properFilename.txt');
 
 await rename(initialFile, resultFile);
